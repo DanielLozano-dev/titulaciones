@@ -1,0 +1,48 @@
+<div class="modal-header">
+    <h5 class="modal-title" id="modalTitulacionTitulo">
+    </h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+</div>
+
+<div class="modal-body">
+    <input type="hidden" id="titulacion-id" value="{{ titulacion.id|default('') }}">
+
+    <div class="mb-3">
+        <label for="titulacion-nombre" class="form-label">Nombre</label>
+        <input type="text" class="form-control" id="titulacion-nombre" value="{{ titulacion.nombre|default('') }}">
+    </div>
+
+    <div class="mb-3">
+        <label for="titulacion-precio" class="form-label">Precio (€)</label>
+        <input type="number" class="form-control" id="titulacion-precio" value="{{ titulacion.precio|default('') }}">
+    </div>
+
+    <div class="mb-3">
+        <label for="titulacion-horas" class="form-label">Horas</label>
+        <input type="number" class="form-control" id="titulacion-horas" value="{{ titulacion.horas|default('') }}">
+    </div>
+
+    <div class="mb-3">
+        <label for="titulacion-activa" class="form-label">Estado</label>
+        <select class="form-select" id="titulacion-activa">
+            <option value="1" {% if titulacion is defined and titulacion.activa %}selected{% endif %}>Activa</option>
+            <option value="0" {% if titulacion is defined and not titulacion.activa %}selected{% endif %}>Inactiva</option>
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label for="titulacion-centros" class="form-label">Centros asociados</label>
+        <select id="titulacion-centros" class="form-select" multiple>
+            {% if centros  is defined %}
+                {% for centro in centros %}
+                    <option value="{{ centro.id }}" >{{ centro.nombre }}</option>
+                {% endfor %}
+            {% endif %}
+        </select>
+    </div>
+</div>
+
+<div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+    <button type="button" class="btn btn-primary" id="btnGuardarTitulacion" onclick="updateGuardarTitulacion()">Guardar</button>
+</div>

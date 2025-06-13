@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Admin{% endblock %}
+
+{% block body %}
+    <div class="container text-center mt-5">
+        <div class="row">
+            <div class="col">
+                <a href="{{ path('users') }}" class="text-decoration-none text-reset">
+                    <div class="card mb-3" style="max-width: 540px; cursor: pointer;">
+                        <div class="row g-0">
+                            <div class="col-md-4">
+                                <img src="{{ asset('imgs/escolar.jpg') }}" class="img-fluid rounded-start" alt="...">
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <h5 class="card-title">Usuarios</h5>
+                                    <p class="card-text">Accede a todos los usuarios de la plataforma para poder gestionarlos de la mejor manera</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col">
+                <a href="{{ path('titulacion') }}" class="text-decoration-none text-reset">
+                    <div class="card mb-3" style="max-width: 540px;">
+                        <div class="row g-0">
+                            <div class="col-md-4">
+                                <img src="{{ asset('imgs/escolar.jpg') }}" class="img-fluid rounded-start" alt="...">
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <h5 class="card-title">Titulaciones</h5>
+                                    <p class="card-text">Accede a todos las titulaciones de la plataforma para poder gestionarlas de la mejor manera</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col">
+                <a href="{{ path('centro') }}" class="text-decoration-none text-reset">
+                    <div class="card mb-3" style="max-width: 540px;">
+                        <div class="row g-0">
+                            <div class="col-md-4">
+                                <img src="{{ asset('imgs/escolar.jpg') }}" class="img-fluid rounded-start" alt="...">
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <h5 class="card-title">Centros</h5>
+                                    <p class="card-text">Accede a todos los centros de la plataforma para poder gestionarlos de la mejor manera</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

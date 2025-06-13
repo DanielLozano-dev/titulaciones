@@ -1,0 +1,48 @@
+<div class="modal-header">
+    <h5 class="modal-title">Editar usuario</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+</div>
+
+<div class="modal-body">
+    <input type="hidden" id="user-id" value="{{ usuario.id }}">
+
+    <div class="mb-3">
+        <label for="nombre" class="form-label">Nombre</label>
+        <input type="text" class="form-control" id="nombre" value="{{ usuario.nombre }}">
+    </div>
+
+    <div class="mb-3">
+        <label for="apellidos" class="form-label">Apellidos</label>
+        <input type="text" class="form-control" id="apellidos" value="{{ usuario.apellidos }}">
+    </div>
+
+    <div class="mb-3">
+        <label for="email" class="form-label">Correo electrónico</label>
+        <input type="email" class="form-control" id="email" value="{{ usuario.email }}">
+    </div>
+
+    <div class="mb-3">
+        <label for="roles" class="form-label">Rol</label>
+        <select class="form-select" id="roles">
+            <option value="ROLE_USER" {{ 'ROLE_USER' in usuario.roles ? 'selected' : '' }}>Usuario</option>
+            <option value="ROLE_ADMIN" {{ 'ROLE_ADMIN' in usuario.roles ? 'selected' : '' }}>Administrador</option>
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label for="activo" class="form-label">Estado</label>
+        <select class="form-select" id="activo">
+            <option value="1" {{ usuario.activo ? 'selected' : '' }}>Activo</option>
+            <option value="0" {{ not usuario.activo ? 'selected' : '' }}>Inactivo</option>
+        </select>
+    </div>
+</div>
+
+<div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+    <button type="button" class="btn btn-primary" id="guardarCambiosBtn" onclick="GuardarUser()" >Guardar cambios</button>
+</div>
+
+
+
+

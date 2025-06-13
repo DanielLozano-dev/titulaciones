@@ -1,0 +1,54 @@
+
+
+<div class="modal-header">
+    <h5 class="modal-title">Gestión de Matrículas para {{ user }}</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+</div>
+
+<div class="modal-body">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <button  onclick="abrirModalAsignarMatricula({{ user_id }})" class="btn btn-success d-flex align-items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor"
+                         class="bi bi-plus-circle me-2" viewBox="0 0 16 16">
+                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                        <path d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0-1A6 6 0 1 1 8 2a6 6 0 0 1 0 12z"/>
+                    </svg>
+                    Asignar matrícula
+                </button>
+            </div>
+            <div class="col-md-3 border-end" id="lista-matriculas" style="overflow-y: auto; max-height: 80vh;">
+                <ul class="list-group">
+                    {% for matricula in matriculas %}
+                        <li class="list-group-item border-0 mb-2 px-0">
+                            <button class="btn btn-primary w-100 text-start rounded shadow-sm" type="button" onclick="cargarDetalleMatricula({{ matricula.id }})">
+                                Matrícula {{ matricula.id }}
+                            </button>
+                        </li>
+
+                    {% endfor %}
+                </ul>
+
+            </div>
+
+            <div class="col-md-9" id="contenedor-detalle-matricula">
+                <p class="text-muted">Selecciona una matrícula para ver los detalles</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+</div>
+<div class="modal fade" id="modalAsignarMatricula" tabindex="-1" aria-labelledby="modalAsignarMatriculaLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content" id="contenidoModalAsignar">
+
+        </div>
+    </div>
+</div>
+
+
+

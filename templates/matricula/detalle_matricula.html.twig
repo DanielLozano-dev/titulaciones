@@ -1,0 +1,12 @@
+<div class="card">
+    <div class="card-header">
+        Detalles de la Matrícula #{{ matricula.id }}
+    </div>
+    <div class="card-body">
+        <p><strong>Fecha de inicio:</strong> {{ matricula.fechaIncio ? matricula.fechaIncio|date('d/m/Y') : 'No definida' }}</p>
+        <p><strong>Fecha de fin:</strong> {{ matricula.fechaFin ? matricula.fechaFin|date('d/m/Y') : 'No definida' }}</p>
+        <p><strong>Usuario:</strong> {{ matricula.user ? matricula.user.nombre ~ ' ' ~ matricula.user.apellidos : 'No asignado' }}</p>
+        <p><strong>Centro:</strong> {{ centro ? centro : 'No asignado' }}</p>
+        <p><strong>Titulación:</strong> {{ titulacion ? titulacion: 'No asignado' }}</p>
+    </div>
+</div>

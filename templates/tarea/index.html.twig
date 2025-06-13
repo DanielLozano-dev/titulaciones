@@ -1,0 +1,144 @@
+    {% extends 'base.html.twig' %}
+
+    {% block title %}Tareas de la Matrícula{% endblock %}
+
+    {% block body %}
+        <div class="container py-4">
+            <h2 class="mb-4" id="matricula" >📋 Tareas de "{{ matricula.titulacion.nombre }}"</h2>
+
+            <form method="post" class="mb-4">
+                <div class="input-group">
+                    <input type="text" name="nombre"   id="tarea" class="form-control" placeholder="Nueva tarea..." required>
+                    <button type="button" onclick="updateGuardarTarea(null,{{ matricula.id }})" class="btn btn-primary">Añadir</button>
+                </div>
+            </form>
+
+            {% if tareas is defined  and tareas|length > 0%}
+                <ul class="list-group">
+                    {% for tarea in tareas %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <div>
+                            <span class="{{ tarea.completada ? 'text-decoration-line-through text-muted' : '' }}">
+                                {{ tarea.descripcion }}
+                            </span><br>
+                                <small class="text-muted">Creada el {{ tarea.fechaCreacion|date('d/m/Y') }}</small>
+                            </div>
+                            <div class="btn-group">
+                                {% if not tarea.completada %}
+                                    <button onclick="completarTarea({{ tarea.id }})" class="btn btn-success btn-sm">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check2" viewBox="0 0 16 16">
+                                            <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0"/>
+                                        </svg>
+                                    </button>
+                                {% endif %}
+                                <button  onclick="abrirModalEditarTarea({{ tarea.id }})" class="btn btn-warning btn-sm">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
+                                        <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.5.5 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11z"/>
+                                    </svg>
+                                </button>
+                                <button onclick="eliminarTarea({{ tarea.id }})"  type="button" class="btn btn-danger btn-sm">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill" viewBox="0 0 16 16">
+                                        <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <div class="alert alert-info">No hay tareas para esta matrícula.</div>
+            {% endif %}
+        </div>
+        <div class="modal fade" id="modalEditarTarea" tabindex="-1" aria-labelledby="editarTareaLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content" id="contenido-modal-editar-tarea">
+                    <!-- Contenido se cargará por AJAX -->
+                </div>
+            </div>
+        </div>
+    {% endblock %}
+    {% block javascripts %}
+    {{ parent() }}
+        <script>
+
+            function completarTarea(id){
+                fetch('/completarTarea?id_tarea=' + id ,{
+                    method: 'GET',
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                }).then(() => {
+                    window.location.reload();
+                });
+            }
+
+            function abrirModalEditarTarea(id) {
+                fetch('/modalEditar?id=' + id, {
+                    method: 'GET',
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                })
+                    .then(res => res.text())
+                    .then(html => {
+                        document.getElementById('contenido-modal-editar-tarea').innerHTML = html;
+                        const modal = new bootstrap.Modal(document.getElementById('modalEditarTarea'));
+                        modal.show();
+                    });
+            }
+
+            function updateGuardarTarea(tarea_id, id_matricula) {
+                let descripcion = "";
+                let completada = false;
+
+                if (tarea_id === null) {
+                    descripcion = document.getElementById('tarea').value;
+                } else {
+                    descripcion = document.getElementById('tarea-descripcion').value;
+                    completada = document.getElementById('tarea-completada').checked;
+                }
+
+                const datos = {
+                    tarea_id: tarea_id,
+                    id_matricula: id_matricula,
+                    descripcion: descripcion,
+                    completada: completada
+                };
+
+                fetch('/updateGuardarTarea', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest'
+                    },
+                    body: JSON.stringify(datos)
+                })
+                    .then(res => {
+                        if (res.redirected) {
+                            window.location.href = res.url;
+                        } else {
+                            return res.json();
+                        }
+                    })
+                    .then(data => {
+                        const modalElement = document.getElementById('modalEditarTarea');
+                        if (modalElement) {
+                            const modal = bootstrap.Modal.getInstance(modalElement);
+                            modal?.hide();
+                        }
+                    });
+            }
+
+
+            function eliminarTarea(id){
+                fetch('/eliminarTarea?id_tarea=' + id ,{
+                    method: 'GET',
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                }).then(() => {
+                    window.location.reload();
+                });
+            }
+        </script>
+    {% endblock %}

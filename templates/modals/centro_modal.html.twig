@@ -1,0 +1,50 @@
+<div class="modal-header">
+    <h5 class="modal-title" id="modalCentroTitulo">
+        <!-- Se rellenará dinámicamente por JS -->
+    </h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+</div>
+
+<div class="modal-body">
+    <input type="hidden" id="centro-id" value="{{ centro.id|default('') }}">
+
+    <div class="mb-3">
+        <label for="centro-nombre" class="form-label">Nombre</label>
+        <input type="text" class="form-control" id="centro-nombre" value="{{ centro.nombre|default('') }}">
+    </div>
+
+    <div class="mb-3">
+        <label for="centro-direccion" class="form-label">Dirección</label>
+        <input type="text" class="form-control" id="centro-direccion" value="{{ centro.direccion|default('') }}">
+    </div>
+
+    <div class="mb-3">
+        <label for="centro-activo" class="form-label">Estado</label>
+        <select class="form-select" id="centro-activo">
+            <option value="1" {% if centro is defined and centro.activo %}selected{% endif %}>Activo</option>
+            <option value="0" {% if centro is defined and not centro.activo %}selected{% endif %}>Inactivo</option>
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label for="centro-titulaciones" class="form-label">Titulaciones asociadas</label>
+        <select id="centro-titulaciones" class="form-select" multiple>
+            {% if titulaciones is defined %}
+                {% for titulacion in titulaciones %}
+                    <option value="{{ titulacion.id }}"
+                            {% if centro is defined and centro.titulacions is defined and centro.titulacions.contains(titulacion) %}
+                                selected
+                            {% endif %}
+                    >
+                        {{ titulacion.nombre }}
+                    </option>
+                {% endfor %}
+            {% endif %}
+        </select>
+    </div>
+</div>
+
+<div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+    <button type="button" class="btn btn-primary" id="btnGuardarCentro" onclick="updateGuardarCentro()">Guardar</button>
+</div>

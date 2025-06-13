@@ -1,0 +1,47 @@
+<div class="modal-header bg-primary text-white rounded-top">
+    <h5 class="modal-title" id="modalAsignarMatriculaLabel">Asignar Matrícula</h5>
+    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+</div>
+
+<div class="modal-body bg-light">
+    <form id="formAsignarMatricula">
+
+        <div class="mb-3">
+            <label class="form-label">Alumno</label>
+            <input type="text" class="form-control" value="{{ user.nombre }} {{ user.apellidos }}" disabled>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Fecha de inicio</label>
+            <input type="date" id="fecha_inicio" class="form-control" name="fecha_inicio" required>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Fecha de fin</label>
+            <input id="fecha_fin" type="date" class="form-control" name="fecha_fin" required>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Centro</label>
+            <select class="form-select" name="centro_id" id="centroSelect" required onchange="cargarTitulaciones(this.value)">
+                <option value="">Selecciona un centro</option>
+                {% for centro in centros %}
+                    <option value="{{ centro.id }}">{{ centro.nombre }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Titulación</label>
+            <select class="form-select" name="titulacion_id" id="titulacionSelect" required>
+                <option value="">Selecciona una titulación</option>
+            </select>
+        </div>
+
+    </form>
+</div>
+
+<div class="modal-footer bg-light rounded-bottom">
+    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+    <button type="button" form="formAsignarMatricula" class="btn btn-primary" onclick="AsignarMatricula({{ user.id }})">Asignar</button>
+</div>

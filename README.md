@@ -141,4 +141,5 @@ php -S 127.0.0.1:8000 -t public
 ```
 
 > [!IMPORTANT]
-> Una vez desplegado el proyecto necesitas crear nuestro primer usuario administrador con el comando : (( ponme el comando bonito : php bin/console app:mkuseradmin "correo_del_user" "password" ))
+> Una vez desplegado el proyecto necesitas crear nuestro primer usuario administrador con el comando :  php bin/console app:mkuseradmin "correo_del_user" "password"
+

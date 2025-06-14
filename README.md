@@ -128,7 +128,6 @@ git clone <url-del-repo>
 cd <directorio>
 
 # 2. Configurar entorno
-cp .env{, .local}
 # Editar .env y .env.local: DATABASE_URL, APP_ENV=dev
 
 # 3. Crear base de datos y ejecutar migraciones
